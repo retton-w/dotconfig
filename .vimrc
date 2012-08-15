@@ -133,8 +133,8 @@ if has('autocmd')
 endif
 
 " setting for c
-if has('autocmd')
-	autocmd FileType c setl smartindent cinwords=if,else if,else,for,while
-	autocmd FileTYpe c setl tabstop=4 shiftwidth=4 softtabstop=4
-endif
+"if has('autocmd')
+"autocmd FileType c setl smartindent cinwords=if,else if,else,for,while
+"autocmd FileTYpe c setl tabstop=4 shiftwidth=4 softtabstop=4
+"endif
 
