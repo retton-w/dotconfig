@@ -108,13 +108,9 @@ nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
 " doxygen setting
 map fg : Dox<CR>
-let g:DoxygenToolkit_authorName="hrh <huangrh@landuntec.com>"
+let g:DoxygenToolkit_authorName="bedford <bedford2001@gmail.com>"
 let s:licenseTag="\<enter>@verbatim\<enter>"
 let s:licenseTag=s:licenseTag."============================================================================\<enter>"
-let s:licenseTag=s:licenseTag."Copyright (c) Shenzhen Landun technology Co.,Ltd. 2011-2012\<enter>"
-let s:licenseTag=s:licenseTag."All rights reserved. \<enter>\<enter>"
-let s:licenseTag=s:licenseTag."Use of this software is controlled by the terms and conditions found in the\<enter>"
-let s:licenseTag=s:licenseTag."license agreenment under which this software has been supplied or provided.\<enter>"
 let s:licenseTag=s:licenseTag."============================================================================\<enter>"
 let s:licenseTag=s:licenseTag."\<enter>@endverbatim\<enter>"
 let g:DoxygenToolkit_licenseTag=s:licenseTag
