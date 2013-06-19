@@ -1,5 +1,14 @@
 [user]
-	name = bedford
-	email = bedford2001@gmail.com
-[core]
-	editor = vim
+	name = Retton
+	email = hfutwangyd@gmail.com
+[github]
+	user = mapleking3
+	token = 1a8f7757372809366adafb54c688a9
+[bitbucket]
+	user = hfutwangyd
+[alias]
+	unstage = reset HEAD --
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = No
