@@ -106,9 +106,9 @@ then
     . .davinci_develop_env_set.sh
 fi
 
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+#export GTK_IM_MODULE=xim
+#export XMODIFIERS=@im=fcitx
+#export QT_IM_MODULE=xim
 
 #PS1="\[\e[1;32m\]\u\[\e[m\]\[\e[1;33m\]@\[\e[m\]\w\[\e[1;35m\]\$\[\e[m\] "
 #PS1="\[\e[1;32m\]G\[\e[m\]\[\e[1;34m\]\w\[\e[m\]\[\e[1;35m\]\$\[\e[m\] "
@@ -117,4 +117,7 @@ PS1="\[\e[1;32m\]Retton\[\e[m\]\w\[\e[1;35m\]\$\[\e[m\] "
 #Set Ice
 export LD_LIBRARY_PATH=/opt/Ice-3.4.2/lib:/usr/local/lib
 export ICE_HOME=/opt/Ice-3.4.2
-export PATH=/usr/local/Trolltech/Qt-4.8.4/bin:$PATH
+export PATH=/home/Retton/bin:/usr/local/eclipse:/usr/local/Trolltech/Qt-4.8.4/bin:/opt/develop/davinci/wra8-uclibc_small/x86-linux2:/opt/develop/davinci/wra8-uclibc_small/bin:/sbin:$PATH
+
+##avoid gvim issue warning message
+#export UBUNTU_MENUPROXY=0

@@ -39,7 +39,7 @@ let Tlist_File_Fold_Auto_Close=0
 let Tlist_GainFocus_On_ToggleOpen=0
 let Tlist_Process_File_Always=1
 let Tlist_WinHeight=20
-let Tlist_WinWidth=30
+let Tlist_WinWidth=40
 let Tlist_Use_Horiz_Window=0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -48,7 +48,9 @@ let g:winManagerWidth=20
 let g:winManagerWindowLayout='FileExplorer'
 
 "**** minibufexpl********
-let g:miniBufExplorerMoreThanOne=1000
+let g:miniBufExplorerMoreThanOne=200
+let g:miniBufExplModSelTarget=1
+let g:miniBufExplForceSyntaxEnable=1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "***** key map entry *****************************************************
@@ -114,13 +116,15 @@ set laststatus=2
 "同时支持GBK和UTF-8编码
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,gbk,gb2312,latin-1
 set fileencoding=utf-8
+"set fileencoding=gb2312
 set encoding=utf-8
 set termencoding=utf-8
 "或者set encoding=cp936 set termencoding=cp936
 
 "DoxgenToolKit
 let g:DoxygenToolkit_authorName="Retton"
-let g:DoxygenToolkit_versionString="V1.0"
+let g:DoxygenToolkit_versionString="V1.0.0"
+let g:DoxygenToolkit_compactDoc="yes"
 
 "srcexpl.vim
 nmap <F8> :SrcExplToggle<CR>
@@ -130,3 +134,6 @@ let g:SrcExpl_gobackKey="<SPACE>"
 
 "vimgdb
 run macros/gdb_mappings.vim
+
+"set fold method
+"set fdm=indent
