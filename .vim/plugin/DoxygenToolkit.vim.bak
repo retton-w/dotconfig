@@ -246,20 +246,28 @@ let s:licenseTag = s:licenseTag . "along with this program; if not, write to the
 let s:licenseTag = s:licenseTag . "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\<enter>"
 
 " Common standard constants
+" add funciont name tag
+if !exists("g:DoxygenToolkit_fnTag_pre")
+  let g:DoxygenToolkit_fnTag_pre = "@fn:     "
+endif
+if !exists("g:DoxygenToolkit_fnTag_post")
+  let g:DoxygenToolkit_fnTag_post = ""
+endif
+
 if !exists("g:DoxygenToolkit_briefTag_pre")
-  let g:DoxygenToolkit_briefTag_pre = "@brief "
+  let g:DoxygenToolkit_briefTag_pre = "@brief:  "
 endif
 if !exists("g:DoxygenToolkit_briefTag_post")
   let g:DoxygenToolkit_briefTag_post = ""
 endif
 if !exists("g:DoxygenToolkit_paramTag_pre")
-  let g:DoxygenToolkit_paramTag_pre = "@param "
+  let g:DoxygenToolkit_paramTag_pre = "@param:  "
 endif
 if !exists("g:DoxygenToolkit_paramTag_post")
   let g:DoxygenToolkit_paramTag_post = ""
 endif
 if !exists("g:DoxygenToolkit_returnTag")
-  let g:DoxygenToolkit_returnTag = "@return "
+  let g:DoxygenToolkit_returnTag = "@return: "
 endif
 if !exists("g:DoxygenToolkit_blockHeader")
   let g:DoxygenToolkit_blockHeader = ""
@@ -271,25 +279,25 @@ if !exists("g:DoxygenToolkit_licenseTag")
   let g:DoxygenToolkit_licenseTag = s:licenseTag
 endif
 if !exists("g:DoxygenToolkit_fileTag")
-  let g:DoxygenToolkit_fileTag = "@file "
+  let g:DoxygenToolkit_fileTag = "@filename:\t"
 endif
 if !exists("g:DoxygenToolkit_authorTag")
-  let g:DoxygenToolkit_authorTag = "@author "
+  let g:DoxygenToolkit_authorTag = "@author:\t\t"
 endif
 if !exists("g:DoxygenToolkit_dateTag")
-  let g:DoxygenToolkit_dateTag = "@date "
+  let g:DoxygenToolkit_dateTag = "@date:\t\t"
 endif
 if !exists("g:DoxygenToolkit_versionTag")
-  let g:DoxygenToolkit_versionTag = "@version "
+  let g:DoxygenToolkit_versionTag = "@version:\t"
 endif
 if !exists("g:DoxygenToolkit_undocTag")
   let g:DoxygenToolkit_undocTag = "DOX_SKIP_BLOCK"
 endif
 if !exists("g:DoxygenToolkit_blockTag")
-  let g:DoxygenToolkit_blockTag = "@name "
+  let g:DoxygenToolkit_blockTag = "@name:\t"
 endif
 if !exists("g:DoxygenToolkit_classTag")
-  let g:DoxygenToolkit_classTag = "@class "
+  let g:DoxygenToolkit_classTag = "@class:\t"
 endif
 
 if !exists("g:DoxygenToolkit_cinoptions")
@@ -343,7 +351,7 @@ if !exists("g:DoxygenToolkit_compactDoc")
 endif
 
 " Necessary '\<' and '\>' will be added to each item of the list.
-let s:ignoreForReturn = ['template', 'explicit', 'inline', 'static', 'virtual', 'void\([[:blank:]]*\*\)\@!', 'const', 'volatile', 'struct']
+let s:ignoreForReturn = ['template', 'explicit', 'inline', 'static', 'virtual',  'const', 'volatile', 'struct']
 if !exists("g:DoxygenToolkit_ignoreForReturn")
   let g:DoxygenToolkit_ignoreForReturn = s:ignoreForReturn[:]
 else
@@ -434,6 +442,8 @@ function! <SID>DoxygenAuthorFunc()
 
   " Get file name
   let l:fileName = expand('%:t')
+  let l:licenseTag = "note:\t"
+  let l:license = "Anhui CHAOYUAN Info Technology Coa.,Ltd. All Right Reserved"
 
   " Begin to write skeleton
   let l:insertionMode = s:StartDocumentationBlock()
@@ -444,6 +454,7 @@ function! <SID>DoxygenAuthorFunc()
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_versionTag.g:DoxygenToolkit_versionString
   let l:date = strftime("%Y-%m-%d")
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_dateTag.l:date
+  exec "normal o" .s:interCommentTag.l:licenseTag.l:license
   if ( g:DoxygenToolkit_endCommentTag != "" )
     exec "normal o".s:endCommentTag
   endif
@@ -492,9 +503,20 @@ function! <SID>DoxygenBlockFunc()
   let l:insertionMode = s:StartDocumentationBlock()
   exec "normal ".l:insertionMode.s:interCommentTag.g:DoxygenToolkit_blockTag
   mark d
-  exec "normal o".s:interCommentTag."@{ ".s:endCommentTag
-  exec "normal o".strpart( s:startCommentTag, 0, 1 )
-  exec "normal A".strpart( s:startCommentTag, 1 )." @} ".s:endCommentTag
+  if 0
+    exec "normal o".s:interCommentTag."@{ ".s:endCommentTag
+    exec "normal o".strpart( s:startCommentTag, 0, 1 )
+    exec "normal A".strpart( s:startCommentTag, 1 )." @} ".s:endCommentTag
+  else
+    exec "normal ".l:insertionMode.s:interCommentTag.g:DoxygenToolkit_briefTag_pre
+    if(g:DoxygenToolkit_compactOneLineDoc =~ "yes" )
+      let s:execCommand = "A "
+    else
+      let s:execCommand = "o"
+    endif
+    exec "normal ".s:execCommand.s:endCommentTag
+  endif
+
   exec "normal `d"
 
   call s:RestoreParameters()
@@ -543,6 +565,7 @@ function! <SID>DoxygenCommentFunc()
 
   " Mark current line for future use
   mark d
+  mark i
 
   " Look for function/method/... to document
   " We look only on the first three lines!
@@ -669,24 +692,48 @@ function! <SID>DoxygenCommentFunc()
     exec "normal A".strpart( s:startCommentBlock, 1 ).g:DoxygenToolkit_blockHeader.s:endCommentBlock
     exec "normal `d" 
   endif
- 
-  " Brief
-  if( g:DoxygenToolkit_compactOneLineDoc =~ "yes" && l:doc.returns != "yes" && len( l:doc.params ) == 0 )
+
+  "Function Name
+  if ( g:DoxygenToolkit_compactOneLineDoc =~ "yes" && l:doc.returns != "yes" && len( l:doc.params ) == 0)
     let s:compactOneLineDoc = "yes"
-    "exec "normal O".s:startCommentTag.g:DoxygenToolkit_briefTag_pre.g:DoxygenToolkit_briefTag_post
     exec "normal O".strpart( s:startCommentTag, 0, 1 )
-    exec "normal A".strpart( s:startCommentTag, 1 ).g:DoxygenToolkit_briefTag_pre.g:DoxygenToolkit_briefTag_post
+    exec "normal A".strpart( s:startCommentTag, 1 ).g:DoxygenToolkit_fnTag_pre.g:DoxygenToolkit_fnTag_post.l:lineBuffer
   else
     let s:compactOneLineDoc = "no"
+    mark f
+    exec "normal `i"
+    let s:FunctionString = substitute(getline(line(".")), "\n", "", "g")
+    exec "normal `f"
     let l:insertionMode = s:StartDocumentationBlock()
-    exec "normal ".l:insertionMode.s:interCommentTag.g:DoxygenToolkit_briefTag_pre.g:DoxygenToolkit_briefTag_post
+    exec "normal ".l:insertionMode.s:interCommentTag.g:DoxygenToolkit_fnTag_pre.g:DoxygenToolkit_fnTag_post.s:FunctionString
   endif
   if( l:doc.name != "None" )
     exec "normal A".l:doc.name." "
   endif
 
+  if( g:DoxygenToolkit_compactDoc != "yes" )
+    exec "normal o".s:interCommentTag
+  endif
+  exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_pre.g:DoxygenToolkit_briefTag_post
   " Mark the line where the cursor will be positionned.
   mark d
+  
+  "if 0
+  "if( g:DoxygenToolkit_compactOneLineDoc =~ "yes" && l:doc.returns != "yes" && len( l:doc.params ) == 0 )
+  "  let s:compactOneLineDoc = "yes"
+  "  exec "normal O".strpart( s:startCommentTag, 0, 1 )
+  "  exec "normal A".strpart( s:startCommentTag, 1 ).g:DoxygenToolkit_briefTag_pre.g:DoxygenToolkit_briefTag_post
+  "else
+  "  let s:compactOneLineDoc = "no"
+  "  let l:insertionMode = s:StartDocumentationBlock()
+  "  exec "normal ".l:insertionMode.s:interCommentTag.g:DoxygenToolkit_briefTag_pre.g:DoxygenToolkit_briefTag_post
+  "endif
+  "if( l:doc.name != "None" )
+  "  exec "normal A".l:doc.name." "
+  "endif
+
+  "" Mark the line where the cursor will be positionned.
+  "mark d
 
   " Arguments/parameters
   if( g:DoxygenToolkit_compactDoc =~ "yes" )

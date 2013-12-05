@@ -51,14 +51,17 @@ let g:winManagerWindowLayout='FileExplorer'
 let g:miniBufExplorerMoreThanOne=200
 let g:miniBufExplModSelTarget=1
 let g:miniBufExplForceSyntaxEnable=1
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "***** key map entry *****************************************************
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader=','
+let mapleader='\'
+"nnoremap <silent><F3>   :Grep<CR>
+nnoremap <silent><F7>   :Rgrep<CR>
 map 	<silent><F5> 	:TlistToggle<CR>
-nmap 	<silent><F6> 	:WMToggle<CR>
+nmap 	<silent><F6> 	:NERDTreeToggle<CR>
 "nmap 	<silent><F7> 	:make<CR><CR>:cw<CR>
+"nmap    <silent><F7>    :DoxA<CR>
+nmap    <silent><F8>    :Dox<CR>
 map 	<Up> 		    gk
 map 	<Down> 		    gj
 map 	<silent><Right> :bn<CR>
@@ -85,24 +88,18 @@ set smarttab
 "set textwidth=80
 set nobackup
 
+set textwidth=80
+"set formatoptions=tcroql
+
 set autoindent
 set cindent
 set smartindent
-set nu!
-
 set mouse=a
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"使用配色方案
-"source $VIMRUNTIME/adam.vim
 colorscheme default
-"hi Comment cterm=NONE ctermfg=DarkGray
-"colorscheme retton
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 "set statusline=%f%m%r%h%w\ [ENCODE=%{&enc}]\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
 set statusline=%f%m%r%h%w\ [%{&enc}][%{&ff}][POS=%l,%v][%p%%]
 set laststatus=2
+set nu
 
 ""只编辑GBK编码的文件
 "set fileencodings=cp936
@@ -121,19 +118,48 @@ set encoding=utf-8
 set termencoding=utf-8
 "或者set encoding=cp936 set termencoding=cp936
 
-"DoxgenToolKit
-let g:DoxygenToolkit_authorName="Retton"
+"********************DoxgenToolKit****************************
+let g:DoxygenToolkit_authorName="retton"
 let g:DoxygenToolkit_versionString="V1.0.0"
 let g:DoxygenToolkit_compactDoc="yes"
-
-"srcexpl.vim
-nmap <F8> :SrcExplToggle<CR>
-let g:SrcExpl_winHeight=10
-let g:SrcExpl_jumpKey="<ENTER>"
-let g:SrcExpl_gobackKey="<SPACE>"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "vimgdb
-run macros/gdb_mappings.vim
+"run macros/gdb_mappings.vim
 
 "set fold method
 "set fdm=indent
+
+"*********************Vundle**********************************
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+
+"let vundle manage vundle
+Bundle 'gmarik/vundle'
+
+"vim-scripts repos
+"Bundle 'vim-plugin-foo'
+"Bundle 'vim-plugin-bar'
+Bundle 'EditPlus'
+Bundle 'Mark'
+Bundle 'grep.vim'
+
+filetype plugin indent on
+"************************************************************
+
+"*****************grep.vim***********************************
+let Grep_Default_Filelist = '*.[chS]'
+let Grep_Default_Filelist = '*.c *.cpp *.asm *.h *.cc *.hpp'
+
+let Grep_Skip_Files = '*.bak *~'
+"************************************************************
+
+"************************************************************
+"Remember Last cursor in
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 1 && line("'\"") < line("$") | exe "normal! g'\"" | endif
+endif
+"************************************************************

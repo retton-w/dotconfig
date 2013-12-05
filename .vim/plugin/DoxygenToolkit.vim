@@ -279,7 +279,7 @@ if !exists("g:DoxygenToolkit_licenseTag")
   let g:DoxygenToolkit_licenseTag = s:licenseTag
 endif
 if !exists("g:DoxygenToolkit_fileTag")
-  let g:DoxygenToolkit_fileTag = "@filename:\t"
+  let g:DoxygenToolkit_fileTag = "@file:\t\t"
 endif
 if !exists("g:DoxygenToolkit_authorTag")
   let g:DoxygenToolkit_authorTag = "@author:\t\t"
@@ -442,19 +442,28 @@ function! <SID>DoxygenAuthorFunc()
 
   " Get file name
   let l:fileName = expand('%:t')
-  let l:licenseTag = "Copyright:\t"
-  let l:license = "2012-2038 Anhui CHAOYUAN Info Technology Co.Ltd"
+  let l:licenseTag = "@note:\t\t"
+  let l:license = "Anhui CHAOYUAN Info Technology Co.,Ltd. All Rights Reserved."
+
+  "add by retton
+  let l:modTag = "@note:\t\t"
+  let l:modHistory = "History:"
+  let l:modForm = "<author><time><version><description>"
+  let l:warnTag = "@warning:\t"
 
   " Begin to write skeleton
   let l:insertionMode = s:StartDocumentationBlock()
   exec "normal ".l:insertionMode.s:interCommentTag.g:DoxygenToolkit_fileTag.l:fileName
+  exec "normal o" .s:interCommentTag.l:licenseTag.l:license
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_pre
   mark d
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_authorTag.g:DoxygenToolkit_authorName
-  exec "normal o".s:interCommentTag.g:DoxygenToolkit_versionTag.g:DoxygenToolkit_versionString
   let l:date = strftime("%Y-%m-%d")
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_dateTag.l:date
-  exec "normal o" .s:interCommentTag.l:licenseTag.l:license
+  exec "normal o".s:interCommentTag.g:DoxygenToolkit_versionTag.g:DoxygenToolkit_versionString
+  exec "normal o".s:interCommentTag.l:modTag.l:modHistory
+  exec "normal o".s:interCommentTag.l:modTag.l:modForm
+  exec "normal o".s:interCommentTag.l:warnTag
   if ( g:DoxygenToolkit_endCommentTag != "" )
     exec "normal o".s:endCommentTag
   endif
@@ -569,7 +578,7 @@ function! <SID>DoxygenCommentFunc()
 
   " Look for function/method/... to document
   " We look only on the first three lines!
-  while( match( l:lineBuffer, l:emptyLinePattern ) != -1 && l:count < 4 )
+  while( match( l:lineBuffer, l:emptyLinePattern ) != -1 && l:count < int4 )
     exec "normal j"
     let l:lineBuffer = l:lineBuffer.' '.getline( line( "." ) )
     let l:count = l:count + 1
@@ -717,6 +726,10 @@ function! <SID>DoxygenCommentFunc()
   exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_pre.g:DoxygenToolkit_briefTag_post
   " Mark the line where the cursor will be positionned.
   mark d
+
+  let l:date = strftime("%Y-%m-%d")
+  let l:authorInfo = "Author/Date: "
+  exec "normal o".s:interCommentTag.g:DoxygenToolkit_briefTag_pre.l:authorInfo.g:DoxygenToolkit_authorName."/".l:date
   
   "if 0
   "if( g:DoxygenToolkit_compactOneLineDoc =~ "yes" && l:doc.returns != "yes" && len( l:doc.params ) == 0 )
