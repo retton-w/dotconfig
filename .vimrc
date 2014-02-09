@@ -1,7 +1,5 @@
 syntax on
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "******	cscope option entry ************************************************
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("cscope")
 	set csprg=/usr/bin/cscope
 	set csto=0
@@ -20,13 +18,11 @@ if has("cscope")
 endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "****** taglist option entry **********************************************
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let Tlist_Ctags_Cmd='/usr/bin/ctags'
 let Tlist_Show_One_File=1
 let Tlist_OnlyWindow=1
-let Tlist_Use_Right_Window=1
+let Tlist_Use_Right_Window=0
 "let Tlist_Sort_Type='name'
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Show_Menu=1
@@ -39,16 +35,16 @@ let Tlist_File_Fold_Auto_Close=0
 let Tlist_GainFocus_On_ToggleOpen=0
 let Tlist_Process_File_Always=1
 let Tlist_WinHeight=20
-let Tlist_WinWidth=40
+let Tlist_WinWidth=30
 let Tlist_Use_Horiz_Window=0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"***** winmanager option entry *******************************************
-let g:winManagerWidth=20
-let g:winManagerWindowLayout='FileExplorer'
+"""""""""""""""""""""""""""NERD Tree""""""""""""""""""""""""""""""""""""""
+let NERDTreeWinPos="right"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"**** minibufexpl********
-let g:miniBufExplorerMoreThanOne=200
+"**** minibufexpl*********************************************************
+let g:miniBufExplorerMoreThanOne=1000
 let g:miniBufExplModSelTarget=1
 let g:miniBufExplForceSyntaxEnable=1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -85,21 +81,21 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 set smarttab
-"set textwidth=80
 set nobackup
 
 set textwidth=80
-"set formatoptions=tcroql
+set formatoptions=tcroql
 
 set autoindent
 set cindent
 set smartindent
 set mouse=a
 colorscheme default
+"colorscheme darkblue
 "set statusline=%f%m%r%h%w\ [ENCODE=%{&enc}]\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
 set statusline=%f%m%r%h%w\ [%{&enc}][%{&ff}][POS=%l,%v][%p%%]
 set laststatus=2
-set nu
+set nonu
 
 ""只编辑GBK编码的文件
 "set fileencodings=cp936
@@ -163,3 +159,6 @@ if has("autocmd")
     au BufReadPost * if line("'\"") > 1 && line("'\"") < line("$") | exe "normal! g'\"" | endif
 endif
 "************************************************************
+
+"解决由于ftpplugins导致的formatoptions不能添加t选项最终导致textwidth无效的问题
+autocmd FileType * setlocal textwidth=80 formatoptions+=t
