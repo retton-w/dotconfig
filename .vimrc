@@ -18,25 +18,34 @@ if has("cscope")
 endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"****** taglist option entry **********************************************
-let Tlist_Ctags_Cmd='/usr/bin/ctags'
-let Tlist_Show_One_File=1
-let Tlist_OnlyWindow=1
-let Tlist_Use_Right_Window=0
-"let Tlist_Sort_Type='name'
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Show_Menu=1
-let Tlist_Max_SubMenu_Items=10
-let Tlist_Max_Tag_length=20
-let Tlist_Use_SingleClick=0
-let Tlist_Auto_Open=0
-let Tlist_Close_On_Select=0
-let Tlist_File_Fold_Auto_Close=0
-let Tlist_GainFocus_On_ToggleOpen=0
-let Tlist_Process_File_Always=1
-let Tlist_WinHeight=20
-let Tlist_WinWidth=30
-let Tlist_Use_Horiz_Window=0
+""****** taglist option entry **********************************************
+"let Tlist_Ctags_Cmd='/usr/bin/ctags'
+"let Tlist_Show_One_File=1
+"let Tlist_OnlyWindow=1
+"let Tlist_Use_Right_Window=0
+""let Tlist_Sort_Type='name'
+"let Tlist_Exit_OnlyWindow=1
+"let Tlist_Show_Menu=1
+"let Tlist_Max_SubMenu_Items=10
+"let Tlist_Max_Tag_length=20
+"let Tlist_Use_SingleClick=0
+"let Tlist_Auto_Open=0
+"let Tlist_Close_On_Select=0
+"let Tlist_File_Fold_Auto_Close=0
+"let Tlist_GainFocus_On_ToggleOpen=0
+"let Tlist_Process_File_Always=1
+"let Tlist_WinHeight=20
+"let Tlist_WinWidth=30
+"let Tlist_Use_Horiz_Window=0
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+"""""""""""""""""""""""""""Tag Bar""""""""""""""""""""""""""""""""""""""
+let g:tagbar_left = 1
+let g:tagbar_width = 30
+let g:tagbar_zoomwidth = 0
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""NERD Tree""""""""""""""""""""""""""""""""""""""
@@ -52,11 +61,12 @@ let g:miniBufExplForceSyntaxEnable=1
 "***** key map entry *****************************************************
 let mapleader='\'
 "nnoremap <silent><F3>   :Grep<CR>
-nnoremap <silent><F7>   :Rgrep<CR>
-map 	<silent><F5> 	:TlistToggle<CR>
+"map 	<silent><F5> 	:TlistToggle<CR>
+map <silent><F5>   :TagbarToggle<CR>
 nmap 	<silent><F6> 	:NERDTreeToggle<CR>
 "nmap 	<silent><F7> 	:make<CR><CR>:cw<CR>
 "nmap    <silent><F7>    :DoxA<CR>
+nnoremap <silent><F7>   :Rgrep<CR>
 nmap    <silent><F8>    :Dox<CR>
 map 	<Up> 		    gk
 map 	<Down> 		    gj
@@ -95,7 +105,7 @@ colorscheme default
 "set statusline=%f%m%r%h%w\ [ENCODE=%{&enc}]\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
 set statusline=%f%m%r%h%w\ [%{&enc}][%{&ff}][POS=%l,%v][%p%%]
 set laststatus=2
-set nonu
+set nu
 
 ""只编辑GBK编码的文件
 "set fileencodings=cp936
@@ -130,18 +140,18 @@ let g:DoxygenToolkit_compactDoc="yes"
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-
-"let vundle manage vundle
-Bundle 'gmarik/vundle'
-
-"vim-scripts repos
-"Bundle 'vim-plugin-foo'
-"Bundle 'vim-plugin-bar'
-Bundle 'EditPlus'
-Bundle 'Mark'
-Bundle 'grep.vim'
+"set rtp+=~/.vim/bundle/vundle
+"call vundle#rc()
+"
+""let vundle manage vundle
+"Bundle 'gmarik/vundle'
+"
+""vim-scripts repos
+""Bundle 'vim-plugin-foo'
+""Bundle 'vim-plugin-bar'
+"Bundle 'EditPlus'
+"Bundle 'Mark'
+"Bundle 'grep.vim'
 
 filetype plugin indent on
 "************************************************************
