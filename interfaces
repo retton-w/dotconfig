@@ -18,5 +18,5 @@ iface eth0 inet static
 address 192.168.16.111
 netmask 255.255.255.0
 gateway 192.168.16.2
-dns-nameservers 192.168.16.2
+dns-nameservers 8.8.8.8
 auto eth0
