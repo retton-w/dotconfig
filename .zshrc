@@ -55,8 +55,8 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=$HOME/bin:/opt/workdir/bin:/usr/local/bin:/opt/develop/davinci/wra8-uclibc_small/x86-linux2:/opt/develop/davinci/wra8-uclibc_small/bin:$PATH
-export LD_LIBRARY_PATH=/opt/Ice-3.4.2/lib:/opt/workdir/gps_map_match/map_test:/usr/local/lib
+#export PATH=$HOME/bin:/opt/workdir/bin:/usr/local/bin:/opt/develop/davinci/wra8-uclibc_small/x86-linux2:/opt/develop/davinci/wra8-uclibc_small/bin:$PATH
+#export LD_LIBRARY_PATH=/opt/Ice-3.4.2/lib:/opt/workdir/gps_map_match/map_test:/usr/local/lib
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # # Preferred editor for local and remote sessions
@@ -73,9 +73,11 @@ export LD_LIBRARY_PATH=/opt/Ice-3.4.2/lib:/opt/workdir/gps_map_match/map_test:/u
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 #davinci cross compile env config
-if [ -f $HOME/.davinci_develop_env_set.sh ];
-then
-    . $HOME/.davinci_develop_env_set.sh
-fi
+#if [ -f $HOME/.davinci_develop_env_set.sh ];
+#then
+#    . $HOME/.davinci_develop_env_set.sh
+#fi
 
 alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit --'
+export TERM=xterm-256color
+

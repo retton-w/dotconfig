@@ -101,7 +101,7 @@ set autoindent
 set cindent
 set smartindent
 set mouse=a
-"colorscheme default
+"colorscheme pablo
 "colorscheme darkblue
 "set statusline=%f%m%r%h%w\ [ENCODE=%{&enc}]\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]
 set statusline=%f%m%r%h%w\ [%{&enc}][%{&ff}][POS=%l,%v][%p%%]
@@ -135,7 +135,7 @@ let g:DoxygenToolkit_compactDoc="yes"
 "run macros/gdb_mappings.vim
 
 "set fold method
-"set fdm=indent
+"set fdm=syntax
 
 "*********************Vundle**********************************
 set nocompatible
@@ -152,6 +152,7 @@ Bundle 'gmarik/vundle'
 "Bundle 'vim-plugin-bar'
 Bundle 'Mark'
 Bundle 'grep.vim'
+Bundle 'Lokaltog/vim-powerline'
 
 filetype plugin indent on
 "************************************************************
@@ -172,3 +173,7 @@ endif
 
 "解决由于ftpplugins导致的formatoptions不能添加t选项最终导致textwidth无效的问题
 autocmd FileType * setlocal textwidth=80 formatoptions+=t
+
+"powerline
+let g:Powerline_symbols='fancy'
+set t_Co=256
