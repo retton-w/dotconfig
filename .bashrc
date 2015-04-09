@@ -121,3 +121,5 @@ export PATH=/home/Retton/bin:/usr/local/eclipse:/usr/local/Trolltech/Qt-4.8.4/bi
 
 ##avoid gvim issue warning message
 #export UBUNTU_MENUPROXY=0
+
+export TERM=xterm-256color
